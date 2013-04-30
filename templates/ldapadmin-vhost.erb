@@ -1,0 +1,61 @@
+### THIS FILE IS MANAGED BY PUPPET. ANY MANUAL CHANGES WILL GET OVERWRITTEN.
+#
+# This is a modification of Debian's own phpldapadmin VirtualHost definition
+#
+# Port 8081 should be blocked by firewall for unsafe interfaces
+Listen *:8081
+
+NameVirtualHost *:8081
+<VirtualHost *:8081>
+     ServerName <%= fqdn %>
+     ServerAdmin <%= serveradmin %>
+     DocumentRoot /usr/share/phpldapadmin
+     ErrorLog /var/log/apache2/phpldapadmin-error.log
+     CustomLog /var/log/apache2/phpldapadmin-access.log common
+
+
+# Define /phpldapadmin alias, this is the default
+<IfModule mod_alias.c>
+    Alias /phpldapadmin /usr/share/phpldapadmin/htdocs
+</IfModule>
+
+
+<Directory /usr/share/phpldapadmin/htdocs/>
+
+    DirectoryIndex index.php
+    Options +FollowSymLinks
+    AllowOverride None
+
+    Order deny,allow
+    Allow from all
+
+    <IfModule mod_mime.c>
+
+      <IfModule mod_php5.c>
+        AddType application/x-httpd-php .php
+
+        php_flag magic_quotes_gpc Off
+        php_flag track_vars On
+        php_flag register_globals On
+        php_value include_path .
+        php_value memory_limit 32M
+      </IfModule>
+
+      <IfModule !mod_php5.c>
+        <IfModule mod_actions.c>
+          <IfModule mod_cgi.c>
+            AddType application/x-httpd-php .php
+            Action application/x-httpd-php /cgi-bin/php5
+          </IfModule>
+          <IfModule mod_cgid.c>                                                    
+            AddType application/x-httpd-php .php                                   
+            Action application/x-httpd-php /cgi-bin/php5                           
+           </IfModule>
+        </IfModule>
+      </IfModule>
+
+    </IfModule>
+
+</Directory>
+
+</VirtualHost>
