@@ -44,10 +44,10 @@
 # See file LICENSE
 
 class ldapadmin(
-    ldap_host = $::ldap_host,
-    ldap_port = $::ldap_port,
-    ldap_basedn = $::ldap_basedn,
-    ldap_admin_binddn = $::ldap_admin_binddn,
+    $ldap_host = $::ldap_host,
+    $ldap_port = $::ldap_port,
+    $ldap_basedn = $::ldap_basedn,
+    $ldap_admin_binddn = $::ldap_admin_binddn,
     $allow_ipv4_address = '127.0.0.1',
     $allow_ipv6_address = '::1'
 )

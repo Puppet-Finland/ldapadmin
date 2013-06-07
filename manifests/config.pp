@@ -4,10 +4,10 @@
 # Configures phpldapadmin
 #
 class ldapadmin::config(
-    ldap_host,
-    ldap_port,
-    ldap_basedn,
-    ldap_admin_binddn
+    $ldap_host,
+    $ldap_port,
+    $ldap_basedn,
+    $ldap_admin_binddn
 )
 {
 
