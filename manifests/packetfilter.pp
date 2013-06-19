@@ -10,7 +10,7 @@ class ldapadmin::packetfilter(
 {
 
     # IPv4 rules
-    firewall { "013 ipv4 accept port 8081 from $allow_ipv4_address":
+    firewall { '013 ipv4 accept ldapadmin':
         provider => 'iptables',
         chain => 'INPUT',
         proto => 'tcp',
@@ -20,7 +20,7 @@ class ldapadmin::packetfilter(
     }
 
     # IPv6 rules
-    firewall { "013 ipv6 accept port 8081 from $allow_ipv6_address":
+    firewall { '013 ipv6 accept ldapadmin':
         provider => 'ip6tables',
         chain => 'INPUT',
         proto => 'tcp',
