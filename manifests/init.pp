@@ -53,6 +53,9 @@ class ldapadmin(
 )
 {
 
+# Rationale for this is explained in init.pp of the sshd module
+if hiera('manage_ldapadmin') != 'false' {
+
     # Dependencies
     include php
     include php::ldap
@@ -77,4 +80,5 @@ class ldapadmin(
             allow_ipv6_address => $allow_ipv6_address
         }
     }
+}
 }
