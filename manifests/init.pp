@@ -54,7 +54,7 @@ class ldapadmin(
 {
 
 # Rationale for this is explained in init.pp of the sshd module
-if hiera('manage_ldapadmin') != 'false' {
+if hiera('manage_ldapadmin', 'true') != 'false' {
 
     # Dependencies
     include php
