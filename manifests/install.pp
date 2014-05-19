@@ -10,6 +10,6 @@ class ldapadmin::install {
     package { 'ldapadmin-phpldapadmin':
         name => $ldapadmin::params::package_name,
         ensure => installed,
-        require => Class['php::ldap'],
+        require => [ Class['ldapadmin::absent'], Class['php::ldap'] ],
     }
 }

@@ -5,9 +5,9 @@
 #
 class ldapadmin::apache2::debian {
 
-    file { 'ldapadmin-ldapadmin-vhost':
-        name => '/etc/apache2/sites-available/ldapadmin-vhost',
-        content => template('ldapadmin/ldapadmin-vhost.erb'),
+    file { 'ldapadmin-ldapadmin-vhost.conf':
+        name => '/etc/apache2/sites-available/ldapadmin-vhost.conf',
+        content => template('ldapadmin/ldapadmin-vhost.conf.erb'),
         ensure => present,
         owner => root,
         group => root,
@@ -18,10 +18,10 @@ class ldapadmin::apache2::debian {
 
     # This is the puppet way of creating links; here we enable the ldapadmin
     # VirtualHost. This will only work on Debian/Ubuntu derivatives
-    file { 'ldapadmin-500-ldapadmin-vhost':
-        name => '/etc/apache2/sites-enabled/500-ldapadmin-vhost',
-        ensure => '/etc/apache2/sites-available/ldapadmin-vhost',
-        require => File['ldapadmin-ldapadmin-vhost'],
+    file { 'ldapadmin-500-ldapadmin-vhost.conf':
+        name => '/etc/apache2/sites-enabled/500-ldapadmin-vhost.conf',
+        ensure => '/etc/apache2/sites-available/ldapadmin-vhost.conf',
+        require => File['ldapadmin-ldapadmin-vhost.conf'],
         notify => Class['apache2::service'],
     }
 }

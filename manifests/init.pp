@@ -60,7 +60,15 @@ if hiera('manage_ldapadmin', 'true') != 'false' {
     include php
     include php::ldap
 
+    include ldapadmin::absent
+
 	include ldapadmin::install
+
+    # The phpldapadmin package in Ubuntu 14.04 (1.2.2-5ubuntu1) is horribly 
+    # broken, and we need to patch the sources while the package is being fixed.
+    if $::lsbdistcodename == 'trusty' {
+        include ldapadmin::install::trusty
+    }
 
     class { 'ldapadmin::config':
         ldap_host => $ldap_host,
