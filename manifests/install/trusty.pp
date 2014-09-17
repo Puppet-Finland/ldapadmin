@@ -7,9 +7,9 @@ class ldapadmin::install::trusty {
 
     include ldapadmin::params
 
-    file { 'ldapadmin-php-5.5-compatibility.patch':
-        name => "${::ldapadmin::params::root_dir}/php5.5-compatibility.patch",
-        content => template('ldapadmin/php5.5-compatibility.patch.erb'),
+    file { 'ldapadmin-TemplateRender.php.patch':
+        name => "${::ldapadmin::params::root_dir}/TemplateRender.php.patch",
+        content => template('ldapadmin/TemplateRender.php.patch.erb'),
         owner => root,
         group => root,
         mode => 644,
@@ -18,12 +18,12 @@ class ldapadmin::install::trusty {
 
     # Apply the patch, unless the code has been fixed already by this patch or 
     # by an updated phpldapadmin package.
-    exec { 'ldapadmin-patch-for-php-5.5':
-        command => "patch -p1 < ${::ldapadmin::params::root_dir}/php5.5-compatibility.patch",
-        unless => "grep preg_replace_callback ${::ldapadmin::params::root_dir}/lib/functions.php",
-        cwd => "${::ldapadmin::params::root_dir}",
+    exec { 'ldapadmin-patch-TemplateRender.php':
+        command => "patch -p0 < ${::ldapadmin::params::root_dir}/TemplateRender.php.patch",
+        unless => "grep password_hash_custom ${::ldapadmin::params::root_dir}/lib/TemplateRender.php",
+        cwd => "${::ldapadmin::params::root_dir}/lib",
         user => root,
         path => [ '/bin', '/usr/bin', '/usr/local/bin' ],
-        require => File['ldapadmin-php-5.5-compatibility.patch'],
+        require => File['ldapadmin-TemplateRender.php.patch'],
     }
 }
