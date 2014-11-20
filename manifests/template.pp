@@ -15,10 +15,10 @@
 #
 # == Examples
 #
-# ldapadmin::template { 'custom inetOrgPerson creation template':
-#   filename => 'custom_create_inetOrgPerson.xml',
-#   type => 'creation',
-# }
+#   ldapadmin::template { 'custom inetOrgPerson creation template':
+#       filename => 'custom_create_inetOrgPerson.xml',
+#       type => 'creation',
+#   }
 #
 # == Authors
 #
@@ -26,8 +26,7 @@
 #
 # == License
 #
-# BSD-lisence
-# See file LICENSE for details
+# BSD-license. See file LICENSE for details.
 #
 define ldapadmin::template(
     $filename,

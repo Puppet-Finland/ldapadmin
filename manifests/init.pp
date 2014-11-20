@@ -24,25 +24,25 @@
 #
 # == Examples
 #
-# class {'ldapadmin':
-#   ldap_host => 'ldap.domain.com',
-#   ldap_port => 389,
-#   ldap_basedn => 'dc=domain,dc=com',
-#   ldap_admin_binddn => 'cn=admin,dc=domain,dc=com',
-#   allow_ipv4_address => '192.168.0.0/24',
-#   allow_ipv6_address => '::1',
-# }
+#   class {'ldapadmin':
+#       ldap_host => 'ldap.domain.com',
+#       ldap_port => 389,
+#       ldap_basedn => 'dc=domain,dc=com',
+#       ldap_admin_binddn => 'cn=admin,dc=domain,dc=com',
+#       allow_ipv4_address => '192.168.0.0/24',
+#       allow_ipv6_address => '::1',
+#   }
 #
 # == Authors
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
+#
 # Samuli Seppänen <samuli@openvpn.net>
 #
 # == License
 #
-# BSD-license
-# See file LICENSE
-
+# BSD-license. See file LICENSE for details.
+#
 class ldapadmin(
     $ldap_host = $::ldap_host,
     $ldap_port = $::ldap_port,
