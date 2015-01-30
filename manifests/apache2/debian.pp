@@ -3,7 +3,11 @@
 #
 # Integrates phpldapadmin with apache2 on Debian derivatives
 #
-class ldapadmin::apache2::debian {
+class ldapadmin::apache2::debian
+(
+    $port
+)
+{
 
     file { 'ldapadmin-ldapadmin-vhost.conf':
         name => '/etc/apache2/sites-available/ldapadmin-vhost.conf',

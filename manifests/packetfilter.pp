@@ -3,7 +3,9 @@
 #
 # Limits access to phpldapadmin based on IP-address/range
 #
-class ldapadmin::packetfilter(
+class ldapadmin::packetfilter
+(
+    $port,
     $allow_ipv4_address,
     $allow_ipv6_address
 )
@@ -14,7 +16,7 @@ class ldapadmin::packetfilter(
         provider => 'iptables',
         chain => 'INPUT',
         proto => 'tcp',
-        port => 8081,
+        port => $port,
         source => "$allow_ipv4_address",
         action => 'accept',
     }
@@ -24,7 +26,7 @@ class ldapadmin::packetfilter(
         provider => 'ip6tables',
         chain => 'INPUT',
         proto => 'tcp',
-        port => 8081,
+        port => $port,
         source => "$allow_ipv6_address",
         action => 'accept',
     }

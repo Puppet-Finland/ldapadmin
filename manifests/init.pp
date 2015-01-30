@@ -4,11 +4,13 @@
 # Currently only supports one LDAP server connection. Apache2 module needs to be 
 # included separately, as it may require parameters, too.
 #
-# Currently supports Debian/Ubuntu. Has partial support for RedHat family of 
-# operating systems.
+# Currently this module supports Debian/Ubuntu. It also has partial support for 
+# RedHat family of operating systems.
 #
 # == Parameters
 #
+# [*port*]
+#   The port on which phpldapadmin listens for requests. Defaults to 8081.
 # [*ldap_host*]
 #   Hostname/IP of the LDAP server. Defaults to $::ldap_host.
 # [*ldap_port*]
@@ -21,6 +23,8 @@
 #   IPv4 address/subnet from which to allow connections. Defaults to 127.0.0.1.
 # [*allow_ipv6_address*]
 #   IPv6 address/subnet from which to allow connections. Defaults to ::1.
+# [*templates*]
+#   A hash of ldapadmin::template resources to realize.
 #
 # == Examples
 #
@@ -43,13 +47,16 @@
 #
 # BSD-license. See file LICENSE for details.
 #
-class ldapadmin(
+class ldapadmin
+(
+    $port = 8081,
     $ldap_host = $::ldap_host,
     $ldap_port = $::ldap_port,
     $ldap_basedn = $::ldap_basedn,
     $ldap_admin_binddn = $::ldap_admin_binddn,
     $allow_ipv4_address = '127.0.0.1',
-    $allow_ipv6_address = '::1'
+    $allow_ipv6_address = '::1',
+    $templates = {}
 )
 {
 
@@ -70,6 +77,9 @@ if hiera('manage_ldapadmin', 'true') != 'false' {
         include ldapadmin::install::trusty
     }
 
+    # Add custom phpldapadmin create/modify templates
+    create_resources('ldapadmin::template', $templates)
+
     class { 'ldapadmin::config':
         ldap_host => $ldap_host,
         ldap_port => $ldap_port,
@@ -79,11 +89,14 @@ if hiera('manage_ldapadmin', 'true') != 'false' {
 
     # For now only do the Apache2 integration on Debian derivatives
     if $::osfamily == 'Debian' {
-    	include ldapadmin::apache2::debian
+        class { 'ldapadmin::apache2::debian':
+            port => $port,
+        }
     }
 
     if tagged('packetfilter') {
         class { 'ldapadmin::packetfilter':
+            port => $port,
             allow_ipv4_address => $allow_ipv4_address,
             allow_ipv6_address => $allow_ipv6_address
         }

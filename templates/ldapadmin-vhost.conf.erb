@@ -2,11 +2,11 @@
 #
 # This is a modification of Debian's own phpldapadmin VirtualHost definition
 #
-# Port 8081 should be blocked by firewall for unsafe interfaces
-Listen *:8081
+# The phpldapadmin port should be blocked by firewall for unsafe interfaces
+Listen *:<%= port %>
 
-NameVirtualHost *:8081
-<VirtualHost *:8081>
+NameVirtualHost *:<%= port %>
+<VirtualHost *:<%= port %>>
      ServerName <%= fqdn %>
      ServerAdmin <%= serveradmin %>
      DocumentRoot /usr/share/phpldapadmin

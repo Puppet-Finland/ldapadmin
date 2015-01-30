@@ -3,7 +3,8 @@
 #
 # Configures phpldapadmin
 #
-class ldapadmin::config(
+class ldapadmin::config
+(
     $ldap_host,
     $ldap_port,
     $ldap_basedn,
@@ -26,7 +27,7 @@ class ldapadmin::config(
         content => template('ldapadmin/config.php.erb'),
         ensure => present,
         owner => root,
-        group => $apache2::params::www_group,
+        group => $::apache2::params::www_group,
         mode => 640,
         require => Class['ldapadmin::install'],
     }
