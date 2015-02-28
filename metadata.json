@@ -8,6 +8,6 @@
   "project_page": "https://github.com/Puppet-Finland/ldapadmin",
   "dependencies": [
     { "name": "puppetfinland/packetfilter", "version_requirement": ">= 0.5.0" },
-    { "name": "puppetfinland/os", "version_requirement": ">= 0.5.0" },
+    { "name": "puppetfinland/os", "version_requirement": ">= 0.5.0" }
   ]
 }
