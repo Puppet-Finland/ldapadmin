@@ -9,6 +9,9 @@
 #
 # == Parameters
 #
+# [*manage*]
+#   Whether to manage phpldapadmin with Puppet or not. Valid values are 'yes' 
+#   (default) and 'no'.
 # [*port*]
 #   The port on which phpldapadmin listens for requests. Defaults to 8081.
 # [*ldap_host*]
@@ -49,6 +52,7 @@
 #
 class ldapadmin
 (
+    $manage = 'yes',
     $port = 8081,
     $ldap_host = $::ldap_host,
     $ldap_port = $::ldap_port,
@@ -60,43 +64,42 @@ class ldapadmin
 )
 {
 
-# Rationale for this is explained in init.pp of the sshd module
-if hiera('manage_ldapadmin', 'true') != 'false' {
+if $manage == 'yes' {
 
     # Dependencies
-    include php
-    include php::ldap
+    include ::php
+    include ::php::ldap
 
-    include ldapadmin::absent
+    include ::ldapadmin::absent
 
-	include ldapadmin::install
+    include ::ldapadmin::install
 
     # The phpldapadmin package in Ubuntu 14.04 (1.2.2-5ubuntu1) is horribly 
     # broken, and we need to patch the sources while the package is being fixed.
     if $::lsbdistcodename == 'trusty' {
-        include ldapadmin::install::trusty
+        include ::ldapadmin::install::trusty
     }
 
     # Add custom phpldapadmin create/modify templates
     create_resources('ldapadmin::template', $templates)
 
-    class { 'ldapadmin::config':
-        ldap_host => $ldap_host,
-        ldap_port => $ldap_port,
-        ldap_basedn => $ldap_basedn,
+    class { '::ldapadmin::config':
+        ldap_host         => $ldap_host,
+        ldap_port         => $ldap_port,
+        ldap_basedn       => $ldap_basedn,
         ldap_admin_binddn => $ldap_admin_binddn,
     }
 
     # For now only do the Apache2 integration on Debian derivatives
     if $::osfamily == 'Debian' {
-        class { 'ldapadmin::apache2::debian':
+        class { '::ldapadmin::apache2::debian':
             port => $port,
         }
     }
 
     if tagged('packetfilter') {
-        class { 'ldapadmin::packetfilter':
-            port => $port,
+        class { '::ldapadmin::packetfilter':
+            port               => $port,
             allow_ipv4_address => $allow_ipv4_address,
             allow_ipv6_address => $allow_ipv6_address
         }

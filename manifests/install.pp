@@ -3,13 +3,11 @@
 #
 # Installs phpldapadmin package
 #
-class ldapadmin::install {
-
-    include ldapadmin::params
+class ldapadmin::install inherits ldapadmin::params {
 
     package { 'ldapadmin-phpldapadmin':
-        name => $ldapadmin::params::package_name,
-        ensure => installed,
+        ensure  => installed,
+        name    => $::ldapadmin::params::package_name,
         require => [ Class['ldapadmin::absent'], Class['php::ldap'] ],
     }
 }

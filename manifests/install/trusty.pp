@@ -5,14 +5,14 @@
 #
 class ldapadmin::install::trusty {
 
-    include ldapadmin::params
+    include ::ldapadmin::params
 
     file { 'ldapadmin-TemplateRender.php.patch':
-        name => "${::ldapadmin::params::root_dir}/TemplateRender.php.patch",
+        name    => "${::ldapadmin::params::root_dir}/TemplateRender.php.patch",
         content => template('ldapadmin/TemplateRender.php.patch.erb'),
-        owner => root,
-        group => root,
-        mode => 644,
+        owner   => $::os::params::adminuser,
+        group   => $::os::params::admingroup,
+        mode    => '0644',
         require => Class['ldapadmin::install'],
     }
 
@@ -20,10 +20,10 @@ class ldapadmin::install::trusty {
     # by an updated phpldapadmin package.
     exec { 'ldapadmin-patch-TemplateRender.php':
         command => "patch -p0 < ${::ldapadmin::params::root_dir}/TemplateRender.php.patch",
-        unless => "grep password_hash_custom ${::ldapadmin::params::root_dir}/lib/TemplateRender.php",
-        cwd => "${::ldapadmin::params::root_dir}/lib",
-        user => root,
-        path => [ '/bin', '/usr/bin', '/usr/local/bin' ],
+        unless  => "grep password_hash_custom ${::ldapadmin::params::root_dir}/lib/TemplateRender.php",
+        cwd     => "${::ldapadmin::params::root_dir}/lib",
+        user    => $::os::params::adminuser,
+        path    => [ '/bin', '/usr/bin', '/usr/local/bin' ],
         require => File['ldapadmin-TemplateRender.php.patch'],
     }
 }

@@ -12,23 +12,23 @@ class ldapadmin::config
 )
 {
 
-    include apache2::params
+    include ::apache2::params
 
     # Disable VirtualHost definition included in the rpm/deb packages or it will 
     # get on our way.
     file { 'ldapadmin-phpldapadmin':
-        name => "${apache2::params::conf_d_dir}/phpldapadmin",
-        ensure => absent,
+        ensure  => absent,
+        name    => "${::apache2::params::conf_d_dir}/phpldapadmin",
         require => Class['ldapadmin::install'],
     }
 
     file { 'ldapadmin-config.php':
-        name => '/etc/phpldapadmin/config.php',
+        ensure  => present,
+        name    => '/etc/phpldapadmin/config.php',
         content => template('ldapadmin/config.php.erb'),
-        ensure => present,
-        owner => root,
-        group => $::apache2::params::www_group,
-        mode => 640,
+        owner   => $::os::params::adminuser,
+        group   => $::apache2::params::www_group,
+        mode    => '0640',
         require => Class['ldapadmin::install'],
     }
 }

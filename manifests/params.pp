@@ -5,6 +5,8 @@
 #
 class ldapadmin::params {
 
+    include ::os::params
+
     case $::osfamily {
         'RedHat': {
             $package_name = 'phpldapadmin'
@@ -21,11 +23,7 @@ class ldapadmin::params {
             $template_mode = 640
         }
         default: {
-            $package_name = 'phpldapadmin'
-            $root_dir = '/usr/share/phpldapadmin'
-            $template_dir = '/etc/phpldapadmin/templates'
-            $template_group = 'www-data'
-            $template_mode = 640
+            fail("Unsupported operating system ${::osfamily}")
         }
     }
 }

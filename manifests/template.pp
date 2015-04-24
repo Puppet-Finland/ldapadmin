@@ -34,15 +34,15 @@ define ldapadmin::template(
 )
 {
 
-    include ldapadmin::params
+    include ::ldapadmin::params
 
     file { "ldapadmin-template-${type}-${filename}":
-        name => "$ldapadmin::params::template_dir/${type}/${filename}",
-        ensure => present,
-        source => "puppet:///files/${filename}",
-        owner => root,
-        group => $ldapadmin::params::template_group,
-        mode => $ldapadmin::params::template_mode,
+        ensure  => present,
+        name    => "${::ldapadmin::params::template_dir}/${type}/${filename}",
+        source  => "puppet:///files/${filename}",
+        owner   => $::os::params::adminuser,
+        group   => $::ldapadmin::params::template_group,
+        mode    => $::ldapadmin::params::template_mode,
         require => Class['ldapadmin::install'],
     }
 

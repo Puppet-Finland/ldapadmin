@@ -1,6 +1,6 @@
 {
   "name": "puppetfinland-ldapadmin",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Puppet-Finland team",
   "license": "BSD license",
   "summary": "Setup phpldapadmin",
@@ -8,6 +8,8 @@
   "project_page": "https://github.com/Puppet-Finland/ldapadmin",
   "dependencies": [
     { "name": "puppetfinland/packetfilter", "version_requirement": ">= 0.5.0" },
-    { "name": "puppetfinland/os", "version_requirement": ">= 0.5.0" }
+    { "name": "puppetfinland/os", "version_requirement": ">= 0.5.0" },
+    { "name": "puppetfinland/apache2", "version_requirement": ">= 0.5.0" },
+    { "name": "puppetfinland/php", "version_requirement": ">= 0.2.1" }
   ]
 }
