@@ -16,7 +16,7 @@ class ldapadmin::packetfilter
         provider => 'iptables',
         chain    => 'INPUT',
         proto    => 'tcp',
-        port     => $port,
+        dport    => $port,
         source   => $allow_ipv4_address,
         action   => 'accept',
     }
@@ -26,7 +26,7 @@ class ldapadmin::packetfilter
         provider => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'tcp',
-        port     => $port,
+        dport    => $port,
         source   => $allow_ipv6_address,
         action   => 'accept',
     }
