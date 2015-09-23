@@ -3,12 +3,12 @@
 # This is a modification of Debian's own phpldapadmin VirtualHost definition
 #
 # The phpldapadmin port should be blocked by firewall for unsafe interfaces
-Listen *:<%= port %>
+Listen *:<%= @port %>
 
-NameVirtualHost *:<%= port %>
-<VirtualHost *:<%= port %>>
-     ServerName <%= fqdn %>
-     ServerAdmin <%= serveradmin %>
+NameVirtualHost *:<%= @port %>
+<VirtualHost *:<%= @port %>>
+     ServerName <%= @fqdn %>
+     ServerAdmin <%= @serveradmin %>
      DocumentRoot /usr/share/phpldapadmin
      ErrorLog /var/log/apache2/phpldapadmin-error.log
      CustomLog /var/log/apache2/phpldapadmin-access.log common

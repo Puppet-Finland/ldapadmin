@@ -266,20 +266,20 @@ $servers = new Datastore();
 /* $servers->NewServer('ldap_pla') must be called before each new LDAP server
    declaration. */
 $servers->newServer('ldap_pla');
-$servers->setValue('server','name','LDAP on <%= ldap_host %>');
-$servers->setValue('server','host','<%= ldap_host %>');
-$servers->setValue('server','port',<%= ldap_port %>);
-$servers->setValue('server','base',array('<%= ldap_basedn %>'));
+$servers->setValue('server','name','LDAP on <%= @ldap_host %>');
+$servers->setValue('server','host','<%= @ldap_host %>');
+$servers->setValue('server','port',<%= @ldap_port %>);
+$servers->setValue('server','base',array('<%= @ldap_basedn %>'));
 $servers->setValue('login','auth_type','session');
-$servers->setValue('login','bind_id','<%= ldap_admin_binddn %>');
+$servers->setValue('login','bind_id','<%= @ldap_admin_binddn %>');
 $servers->setValue('login','bind_pass','');
 $servers->setValue('server','tls',false);
 
 /* Connection to the config database */
 $servers->newServer('ldap_pla');
-$servers->setValue('server','name','Slapd config database on <%= ldap_host %>');
-$servers->setValue('server','host','<%= ldap_host %>');
-$servers->setValue('server','port',<%= ldap_port %>);
+$servers->setValue('server','name','Slapd config database on <%= @ldap_host %>');
+$servers->setValue('server','host','<%= @ldap_host %>');
+$servers->setValue('server','port',<%= @ldap_port %>);
 $servers->setValue('server','base',array('cn=config'));
 $servers->setValue('login','auth_type','session');
 $servers->setValue('login','bind_id','cn=admin,cn=config');
