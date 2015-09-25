@@ -13,14 +13,14 @@ class ldapadmin::params {
             $root_dir = '/usr/share/phpldapadmin'
             $template_dir = "${root_dir}/templates"
             $template_group = 'root'
-            $template_mode = 644
+            $template_mode = '0644'
         }
         'Debian': {
             $package_name = 'phpldapadmin'
             $root_dir = '/usr/share/phpldapadmin'
             $template_dir = '/etc/phpldapadmin/templates'
             $template_group = 'www-data'
-            $template_mode = 640
+            $template_mode = '0640'
         }
         default: {
             fail("Unsupported operating system ${::osfamily}")
