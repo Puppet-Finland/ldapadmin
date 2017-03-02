@@ -10,8 +10,10 @@
 # == Parameters
 #
 # [*manage*]
-#   Whether to manage phpldapadmin with Puppet or not. Valid values are 'yes' 
-#   (default) and 'no'.
+#   Whether to manage phpldapadmin with Puppet or not. Valid values are true
+#   (default) and false.
+# [*manage_packetfilter*]
+#   Manage packet filtering rules. Valid values are true (default) and false.
 # [*port*]
 #   The port on which phpldapadmin listens for requests. Defaults to 8081.
 # [*ldap_host*]
@@ -29,17 +31,6 @@
 # [*templates*]
 #   A hash of ldapadmin::template resources to realize.
 #
-# == Examples
-#
-#   class {'ldapadmin':
-#       ldap_host => 'ldap.domain.com',
-#       ldap_port => 389,
-#       ldap_basedn => 'dc=domain,dc=com',
-#       ldap_admin_binddn => 'cn=admin,dc=domain,dc=com',
-#       allow_ipv4_address => '192.168.0.0/24',
-#       allow_ipv6_address => '::1',
-#   }
-#
 # == Authors
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
@@ -52,19 +43,20 @@
 #
 class ldapadmin
 (
-    $manage = 'yes',
-    $port = 8081,
-    $ldap_host = $::ldap_host,
-    $ldap_port = $::ldap_port,
-    $ldap_basedn = $::ldap_basedn,
-    $ldap_admin_binddn = $::ldap_admin_binddn,
-    $allow_ipv4_address = '127.0.0.1',
-    $allow_ipv6_address = '::1',
-    $templates = {}
+    Boolean $manage = true,
+    Boolean $manage_packetfilter = true,
+            $port = 8081,
+            $ldap_host = $::ldap_host,
+            $ldap_port = $::ldap_port,
+            $ldap_basedn = $::ldap_basedn,
+            $ldap_admin_binddn = $::ldap_admin_binddn,
+            $allow_ipv4_address = '127.0.0.1',
+            $allow_ipv6_address = '::1',
+    Hash    $templates = {}
 )
 {
 
-if $manage == 'yes' {
+if $manage {
 
     # Dependencies
     include ::php
@@ -97,7 +89,7 @@ if $manage == 'yes' {
         }
     }
 
-    if tagged('packetfilter') {
+    if $manage_packetfilter {
         class { '::ldapadmin::packetfilter':
             port               => $port,
             allow_ipv4_address => $allow_ipv4_address,
