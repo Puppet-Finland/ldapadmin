@@ -25,9 +25,9 @@
 # [*ldap_admin_binddn*]
 #   Administrative account's dn. Defaults to $::ldap_admin_binddn.
 # [*allow_ipv4_address*]
-#   IPv4 address/subnet from which to allow connections. Defaults to 127.0.0.1.
+#   IPv4 address/subnet from which to allow connections. Defaults to '127.0.0.1'.
 # [*allow_ipv6_address*]
-#   IPv6 address/subnet from which to allow connections. Defaults to ::1.
+#   IPv6 address/subnet from which to allow connections. Defaults to '::1'.
 # [*templates*]
 #   A hash of ldapadmin::template resources to realize.
 #

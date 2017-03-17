@@ -28,9 +28,10 @@
 #
 # BSD-license. See file LICENSE for details.
 #
-define ldapadmin::template(
-    $filename,
-    $type
+define ldapadmin::template
+(
+    String $filename,
+    Enum['creation','modification'] $type
 )
 {
 

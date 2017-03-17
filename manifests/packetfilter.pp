@@ -5,9 +5,9 @@
 #
 class ldapadmin::packetfilter
 (
-    $port,
-    $allow_ipv4_address,
-    $allow_ipv6_address
+    Integer $port,
+    String  $allow_ipv4_address,
+    String  $allow_ipv6_address
 )
 {
 

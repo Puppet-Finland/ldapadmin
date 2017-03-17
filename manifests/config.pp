@@ -5,10 +5,10 @@
 #
 class ldapadmin::config
 (
-    $ldap_host,
-    $ldap_port,
-    $ldap_basedn,
-    $ldap_admin_binddn
+    String  $ldap_host,
+    Integer $ldap_port,
+    String  $ldap_basedn,
+    String  $ldap_admin_binddn
 )
 {
 

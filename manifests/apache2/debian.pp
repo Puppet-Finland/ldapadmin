@@ -5,7 +5,7 @@
 #
 class ldapadmin::apache2::debian
 (
-    $port
+    Integer $port
 
 ) inherits ldapadmin::params
 {
