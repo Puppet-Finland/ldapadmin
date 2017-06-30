@@ -8,7 +8,8 @@ class ldapadmin::config
     String  $ldap_host,
     Integer $ldap_port,
     String  $ldap_basedn,
-    String  $ldap_admin_binddn
+    String  $ldap_admin_binddn,
+    Boolean $custom_templates_only
 )
 {
 
@@ -21,6 +22,8 @@ class ldapadmin::config
         name    => "${::apache2::params::conf_d_dir}/phpldapadmin",
         require => Class['ldapadmin::install'],
     }
+
+    $l_custom_templates_only = bool2str($custom_templates_only)
 
     file { 'ldapadmin-config.php':
         ensure  => present,

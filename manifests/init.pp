@@ -28,6 +28,8 @@
 #   IPv4 address/subnet from which to allow connections. Defaults to '127.0.0.1'.
 # [*allow_ipv6_address*]
 #   IPv6 address/subnet from which to allow connections. Defaults to '::1'.
+# [*custom_templates_only*]
+#   Show only custom templates. Valid values are true (default) and false.
 # [*templates*]
 #   A hash of ldapadmin::template resources to realize.
 #
@@ -52,6 +54,7 @@ class ldapadmin
             $ldap_admin_binddn = $::ldap_admin_binddn,
             $allow_ipv4_address = '127.0.0.1',
             $allow_ipv6_address = '::1',
+            $custom_templates_only = true,
     Hash    $templates = {}
 )
 {
@@ -76,10 +79,11 @@ if $manage {
     create_resources('ldapadmin::template', $templates)
 
     class { '::ldapadmin::config':
-        ldap_host         => $ldap_host,
-        ldap_port         => $ldap_port,
-        ldap_basedn       => $ldap_basedn,
-        ldap_admin_binddn => $ldap_admin_binddn,
+        ldap_host             => $ldap_host,
+        ldap_port             => $ldap_port,
+        ldap_basedn           => $ldap_basedn,
+        ldap_admin_binddn     => $ldap_admin_binddn,
+        custom_templates_only => $custom_templates_only,
     }
 
     # For now only do the Apache2 integration on Debian derivatives
